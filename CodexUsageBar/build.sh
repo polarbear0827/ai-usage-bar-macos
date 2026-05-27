@@ -3,9 +3,14 @@ set -euo pipefail
 export COPYFILE_DISABLE=1
 
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
-APP_DIR="$ROOT_DIR/build/CodexUsageBar.app"
+BUILD_DIR="${AI_USAGE_BAR_BUILD_DIR:-$ROOT_DIR/build}"
+APP_DIR="$BUILD_DIR/CodexUsageBar.app"
 MACOS_DIR="$APP_DIR/Contents/MacOS"
-HELPER_DIR="$ROOT_DIR/build/helper"
+HELPER_DIR="$BUILD_DIR/helper"
+ARCHES=("arm64" "x86_64")
+DEPLOYMENT_TARGET="13.0"
+
+export MACOSX_DEPLOYMENT_TARGET="$DEPLOYMENT_TARGET"
 
 clean_bundle_xattrs() {
   command -v xattr >/dev/null 2>&1 || return 0
@@ -19,24 +24,39 @@ clean_bundle_xattrs() {
   xattr -d 'com.apple.fileprovider.fpfs#P' "$APP_DIR" >/dev/null 2>&1 || true
 }
 
-rm -rf "$APP_DIR"
+build_universal() {
+  local output="$1"
+  shift
+  local slices=()
+
+  for arch in "${ARCHES[@]}"; do
+    local slice="$HELPER_DIR/$(basename "$output").$arch"
+    swiftc \
+      -swift-version 5 \
+      -O \
+      -target "$arch-apple-macos$DEPLOYMENT_TARGET" \
+      "$@" \
+      -o "$slice"
+    slices+=("$slice")
+  done
+
+  lipo -create "${slices[@]}" -output "$output"
+}
+
+rm -rf "$APP_DIR" "$HELPER_DIR"
 mkdir -p "$MACOS_DIR" "$APP_DIR/Contents/Resources" "$HELPER_DIR"
 cp "$ROOT_DIR/Info.plist" "$APP_DIR/Contents/Info.plist"
 
-swiftc \
-  -swift-version 5 \
-  -O \
+build_universal \
+  "$HELPER_DIR/statusline-bridge" \
   "$ROOT_DIR/Sources/statusline_bridge.swift" \
-  -o "$HELPER_DIR/statusline-bridge"
 
 cp "$HELPER_DIR/statusline-bridge" "$APP_DIR/Contents/Resources/statusline-bridge"
 
-swiftc \
-  -swift-version 5 \
-  -O \
+build_universal \
+  "$MACOS_DIR/CodexUsageBar" \
   -framework Cocoa \
-  "$ROOT_DIR/Sources/main.swift" \
-  -o "$MACOS_DIR/CodexUsageBar"
+  "$ROOT_DIR/Sources/main.swift"
 
 chmod +x "$MACOS_DIR/CodexUsageBar"
 

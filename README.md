@@ -11,6 +11,13 @@ It is built to be boring in the best way: no background daemon, no browser scrap
 
 ## Install
 
+Compatibility:
+
+- macOS 13 Ventura or newer
+- Apple Silicon and Intel Macs; the app and Claude helper are built as universal binaries
+- Codex desktop app is required for Codex / ChatGPT usage
+- Claude Code is required for Claude usage updates
+
 Download the installer package from this repository:
 
 [installer/AIUsageBar-macOS-0.1.0.pkg](installer/AIUsageBar-macOS-0.1.0.pkg)
@@ -26,6 +33,8 @@ The installer places the app in:
 Open the app once, then click the menu bar item.
 
 > Note: this public package is currently ad-hoc signed. Without an Apple Developer ID and notarization, macOS may show an "unidentified developer" warning. The app source is included so the package can be audited and rebuilt locally.
+
+For a smoother public release, sign and notarize the package with an Apple Developer ID certificate before distributing outside GitHub.
 
 ## First Run
 
@@ -128,6 +137,8 @@ Requirements:
 - Xcode Command Line Tools
 - Codex desktop app installed for Codex usage
 - Claude Code installed for Claude usage
+
+The build script produces universal `arm64 + x86_64` binaries by default.
 
 Build the app:
 

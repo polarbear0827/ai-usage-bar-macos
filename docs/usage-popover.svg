@@ -1,0 +1,25 @@
+<svg width="920" height="620" viewBox="0 0 920 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="620" rx="28" fill="#111315"/>
+  <rect x="26" y="26" width="868" height="568" rx="28" fill="#181A1D" stroke="#3A3D42"/>
+  <text x="460" y="82" text-anchor="middle" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="34" font-weight="700">AI 使用量</text>
+  <text x="460" y="122" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="20">每 30 秒更新，Claude 由官方 statusline 提供</text>
+
+  <text x="460" y="178" text-anchor="middle" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="27" font-weight="700">Codex PLUS</text>
+  <text x="210" y="232" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">Codex 5 小時額度</text>
+  <text x="710" y="232" text-anchor="end" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">已用 1% · 剩 99%</text>
+  <rect x="210" y="254" width="500" height="10" rx="5" fill="#303236"/>
+  <rect x="210" y="254" width="18" height="10" rx="5" fill="#0A84FF"/>
+  <text x="460" y="303" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="20">重置：5/28 02:56</text>
+
+  <text x="210" y="360" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">Codex 7 天額度</text>
+  <text x="710" y="360" text-anchor="end" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">已用 42% · 剩 58%</text>
+  <rect x="210" y="382" width="500" height="10" rx="5" fill="#303236"/>
+  <rect x="210" y="382" width="210" height="10" rx="5" fill="#0A84FF"/>
+  <text x="460" y="431" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="20">Credits：0 · 更新於 21:56:01</text>
+
+  <text x="460" y="491" text-anchor="middle" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="27" font-weight="700">Claude Sonnet 4.6</text>
+  <text x="210" y="544" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">Claude 7 天額度</text>
+  <text x="710" y="544" text-anchor="end" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23" font-weight="650">已用 35% · 剩 65%</text>
+  <rect x="210" y="566" width="500" height="10" rx="5" fill="#303236"/>
+  <rect x="210" y="566" width="175" height="10" rx="5" fill="#0A84FF"/>
+</svg>

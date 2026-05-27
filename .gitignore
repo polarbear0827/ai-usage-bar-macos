@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+
+# Build outputs
+CodexUsageBar/build/
+dist/
+
+# Local signing / notarization material
+*.p12
+*.cer
+*.mobileprovision
+
+# User-local data
+.env
+*.log

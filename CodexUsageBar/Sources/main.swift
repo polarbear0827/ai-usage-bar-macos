@@ -609,6 +609,9 @@ final class ProgressRowView: NSView {
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
             stack.topAnchor.constraint(equalTo: topAnchor),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            header.widthAnchor.constraint(equalTo: stack.widthAnchor),
+            progress.widthAnchor.constraint(equalTo: stack.widthAnchor),
+            resetLabel.widthAnchor.constraint(equalTo: stack.widthAnchor),
             progress.heightAnchor.constraint(equalToConstant: 6),
             widthAnchor.constraint(greaterThanOrEqualToConstant: 260)
         ])
@@ -696,8 +699,9 @@ final class SetupStepView: NSView {
 final class PopoverViewController: NSViewController {
     private enum Layout {
         static let width: CGFloat = 390
-        static let compactHeight: CGFloat = 490
-        static let setupHeight: CGFloat = 600
+        static let contentWidth: CGFloat = 330
+        static let minHeight: CGFloat = 380
+        static let maxHeight: CGFloat = 640
     }
 
     private let state: UsageState
@@ -720,6 +724,7 @@ final class PopoverViewController: NSViewController {
     private let quitButton = NSButton(title: "結束", target: nil, action: nil)
     private let resetFormatter = DateFormatter()
     private let fetchedFormatter = DateFormatter()
+    private var contentStack: NSStackView?
 
     init(state: UsageState) {
         self.state = state
@@ -736,23 +741,28 @@ final class PopoverViewController: NSViewController {
     }
 
     override func loadView() {
-        view = NSView(frame: NSRect(x: 0, y: 0, width: Layout.width, height: Layout.setupHeight))
+        view = NSView(frame: NSRect(x: 0, y: 0, width: Layout.width, height: Layout.maxHeight))
         view.wantsLayer = true
-        preferredContentSize = NSSize(width: Layout.width, height: Layout.setupHeight)
+        preferredContentSize = NSSize(width: Layout.width, height: Layout.maxHeight)
 
         titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        titleLabel.alignment = .center
         subtitleLabel.font = .systemFont(ofSize: 12)
         subtitleLabel.textColor = .secondaryLabelColor
+        subtitleLabel.alignment = .center
+        subtitleLabel.maximumNumberOfLines = 2
 
         [codexLabel, claudeLabel].forEach {
             $0.font = .systemFont(ofSize: 14, weight: .semibold)
             $0.textColor = .labelColor
+            $0.alignment = .center
         }
 
         [codexInfoLabel, claudeInfoLabel].forEach {
             $0.font = .systemFont(ofSize: 12)
             $0.textColor = .secondaryLabelColor
             $0.maximumNumberOfLines = 2
+            $0.alignment = .center
         }
 
         setupMessageLabel.font = .systemFont(ofSize: 11)
@@ -764,10 +774,12 @@ final class PopoverViewController: NSViewController {
         errorLabel.maximumNumberOfLines = 3
 
         refreshButton.bezelStyle = .rounded
+        refreshButton.controlSize = .small
         refreshButton.target = self
         refreshButton.action = #selector(refreshTapped)
 
         quitButton.bezelStyle = .rounded
+        quitButton.controlSize = .small
         quitButton.target = self
         quitButton.action = #selector(quitTapped)
 
@@ -775,22 +787,15 @@ final class PopoverViewController: NSViewController {
         claudeLoginStep.setAction(target: self, action: #selector(loginClaudeTapped))
         claudeResponseStep.setAction(target: self, action: #selector(openClaudeCodeTapped))
 
-        let headerText = NSStackView(views: [titleLabel, subtitleLabel])
-        headerText.orientation = .vertical
-        headerText.spacing = 2
-
         let actions = NSStackView(views: [refreshButton, quitButton])
         actions.orientation = .horizontal
         actions.spacing = 6
-
-        let header = NSStackView(views: [headerText, actions])
-        header.orientation = .horizontal
-        header.alignment = .centerY
-        header.spacing = 12
-        headerText.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        actions.alignment = .centerY
 
         let stack = NSStackView(views: [
-            header,
+            titleLabel,
+            subtitleLabel,
+            actions,
             codexLabel,
             codexPrimaryRow,
             codexSecondaryRow,
@@ -806,18 +811,35 @@ final class PopoverViewController: NSViewController {
             errorLabel
         ])
         stack.orientation = .vertical
-        stack.alignment = .width
+        stack.alignment = .centerX
         stack.spacing = 13
-        stack.edgeInsets = NSEdgeInsets(top: 18, left: 18, bottom: 16, right: 18)
+        stack.edgeInsets = NSEdgeInsets(top: 18, left: 0, bottom: 18, right: 0)
+        stack.detachesHiddenViews = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stack)
+        contentStack = stack
 
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stack.topAnchor.constraint(equalTo: view.topAnchor),
             stack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
-            view.widthAnchor.constraint(equalToConstant: Layout.width)
+            stack.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            view.widthAnchor.constraint(equalToConstant: Layout.width),
+            titleLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            subtitleLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            codexPrimaryRow.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            codexSecondaryRow.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeFiveHourRow.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeSevenDayRow.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            codexLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            codexInfoLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeInfoLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            setupMessageLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            errorLabel.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeBridgeStep.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeLoginStep.widthAnchor.constraint(equalToConstant: Layout.contentWidth),
+            claudeResponseStep.widthAnchor.constraint(equalToConstant: Layout.contentWidth)
         ])
 
         render()
@@ -868,12 +890,11 @@ final class PopoverViewController: NSViewController {
         }
 
         if let snapshot = state.claudeSnapshot {
-            let suffix = snapshot.isStale ? " · 資料可能過舊" : ""
             let modelText = snapshot.model.map { " \($0)" } ?? ""
             claudeLabel.stringValue = "Claude\(modelText)"
             claudeFiveHourRow.update(window: snapshot.fiveHour, resetFormatter: resetFormatter)
             claudeSevenDayRow.update(window: snapshot.sevenDay, resetFormatter: resetFormatter)
-            claudeInfoLabel.stringValue = "statusline 更新於 \(fetchedFormatter.string(from: snapshot.updatedAt))\(suffix)"
+            claudeInfoLabel.stringValue = "最後更新：\(fetchedFormatter.string(from: snapshot.updatedAt)) · Claude 回應後才更新"
         } else {
             claudeLabel.stringValue = "Claude"
             claudeFiveHourRow.update(window: nil, resetFormatter: resetFormatter)
@@ -925,11 +946,13 @@ final class PopoverViewController: NSViewController {
         errorLabel.stringValue = errors.joined(separator: "\n")
         errorLabel.isHidden = errorLabel.stringValue.isEmpty
 
-        updatePreferredSize(setupVisible: !setupComplete)
+        updatePreferredSize()
     }
 
-    private func updatePreferredSize(setupVisible: Bool) {
-        let height = setupVisible ? Layout.setupHeight : Layout.compactHeight
+    private func updatePreferredSize() {
+        view.layoutSubtreeIfNeeded()
+        let fittingHeight = contentStack?.fittingSize.height ?? Layout.minHeight
+        let height = min(Layout.maxHeight, max(Layout.minHeight, ceil(fittingHeight)))
         let size = NSSize(width: Layout.width, height: height)
         preferredContentSize = size
         if view.frame.size != size {
@@ -947,7 +970,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
 
         if let button = statusItem.button {
-            button.title = "AI C-- Cl--"
+            button.title = "GPT --  Claude --"
             button.target = self
             button.action = #selector(togglePopover)
         }
@@ -977,18 +1000,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         guard let button = statusItem.button else { return }
         let codex: String
         if let used = state.codexSnapshot?.primary?.usedPercent {
-            codex = "C\(formatPercent(used))"
+            codex = formatPercent(used)
         } else {
-            codex = state.isLoadingCodex ? "C..." : "C--"
+            codex = state.isLoadingCodex ? "..." : "--"
         }
 
         let claude: String
         if let used = state.claudeSnapshot?.fiveHour?.usedPercent {
-            claude = "Cl\(formatPercent(used))"
+            claude = formatPercent(used)
         } else {
-            claude = "Cl--"
+            claude = "--"
         }
-        button.title = "AI \(codex) \(claude)"
+        button.title = "GPT \(codex)  Claude \(claude)"
     }
 }
 

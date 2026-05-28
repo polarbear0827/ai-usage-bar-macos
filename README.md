@@ -47,10 +47,10 @@ Claude usage needs one safe setup step:
 
 After setup is complete, the setup controls disappear and the popover switches to the compact usage view.
 
-Claude's timestamp means:
+Claude's info line means:
 
 ```text
-Last updated: HH:mm:ss · Updates after Claude replies
+Model: Sonnet 4.6 · Last updated: HH:mm:ss · Updates after Claude replies
 ```
 
 Pressing **Refresh** rereads the local cache. It does not force Claude Code to produce a new statusline update.
@@ -213,10 +213,10 @@ Claude 需要一個安全設定步驟：
 
 設定完成後，設定區會自動隱藏，介面會變成精簡用量模式。
 
-Claude 的時間說明是：
+Claude 的資訊列說明是：
 
 ```text
-最後更新：HH:mm:ss · Claude 回應後才更新
+模型：Sonnet 4.6 · 最後更新：HH:mm:ss · Claude 回應後才更新
 ```
 
 按 **刷新** 只會重新讀取本機快取，不會強制 Claude Code 產生新的 statusline 更新。

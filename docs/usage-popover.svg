@@ -21,10 +21,10 @@
   <text x="520" y="471" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="20">重置：5/28 02:59</text>
   <text x="520" y="517" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="20">Credits：0 · 更新於 23:13:19</text>
 
-  <text x="520" y="578" text-anchor="middle" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="28" font-weight="700">Claude Sonnet 4.6</text>
+  <text x="520" y="578" text-anchor="middle" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="28" font-weight="700">Claude</text>
   <text x="260" y="631" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="24" font-weight="650">Claude 5 小時額度</text>
   <text x="780" y="631" text-anchor="end" fill="#F3F4F6" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="24" font-weight="650">已用 0% · 剩 100%</text>
   <rect x="260" y="652" width="520" height="10" rx="5" fill="#303236"/>
   <rect x="260" y="652" width="6" height="10" rx="5" fill="#0A84FF"/>
-  <text x="520" y="696" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="19">最後更新：21:40:00 · Claude 回應後才更新</text>
+  <text x="520" y="696" text-anchor="middle" fill="#A8ADB4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="19">模型：Sonnet 4.6 · 最後更新：21:40:00 · Claude 回應後才更新</text>
 </svg>

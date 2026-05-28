@@ -890,11 +890,11 @@ final class PopoverViewController: NSViewController {
         }
 
         if let snapshot = state.claudeSnapshot {
-            let modelText = snapshot.model.map { " \($0)" } ?? ""
-            claudeLabel.stringValue = "Claude\(modelText)"
+            claudeLabel.stringValue = "Claude"
             claudeFiveHourRow.update(window: snapshot.fiveHour, resetFormatter: resetFormatter)
             claudeSevenDayRow.update(window: snapshot.sevenDay, resetFormatter: resetFormatter)
-            claudeInfoLabel.stringValue = "最後更新：\(fetchedFormatter.string(from: snapshot.updatedAt)) · Claude 回應後才更新"
+            let modelText = snapshot.model.map { "模型：\($0) · " } ?? ""
+            claudeInfoLabel.stringValue = "\(modelText)最後更新：\(fetchedFormatter.string(from: snapshot.updatedAt)) · Claude 回應後才更新"
         } else {
             claudeLabel.stringValue = "Claude"
             claudeFiveHourRow.update(window: nil, resetFormatter: resetFormatter)
